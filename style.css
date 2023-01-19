@@ -1,11 +1,20 @@
+html, 
 body {
     margin: 0;
+    height: 100%;
     font-family: sans-serif;
 }
 
 a {
     text-decoration: none;
     color: black;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100%;
 }
 
 .container {
@@ -43,12 +52,52 @@ a {
 }
 
 .add-button {
+    cursor: pointer;
     font-size: 32px;
+    transition: 0.3s;
+}
+
+.main__container {
+    flex: 1 1 auto;
+    min-height: calc(100vh - 180px);
+}
+
+.cards__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+.cat-card {
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.cat-card__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cat-name {
+    margin: 0;
+    margin-right: 5px;
+}
+
+.fa-heart {
+    align-self: flex-end;
+    font-size: 1.5em;
+    color: rgb(216, 4, 4);
 }
 
 .footer__container {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     box-shadow: 0px -1px 2px rgb(190, 190, 190);
 }
 
@@ -66,5 +115,18 @@ a {
 
 .socials-icon {
     margin-right: 10px;
-    font-size: 25px;
+    font-size: 1.5em;
+    transition: 0.2s;
+}
+
+.fa-github:hover {
+    color: #9735d8;
+}
+
+.fa-vk:hover {
+    color: rgb(110, 108, 238)
+}
+
+.fa-telegram:hover {
+    color: rgb(34, 158, 217);
 }
