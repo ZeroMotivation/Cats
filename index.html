@@ -7,12 +7,14 @@
         initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
         <script src="https://kit.fontawesome.com/9b1ffdd68f.js" crossorigin="anonymous"></script>
+        <script src="scripts/cats.js"></script>
+        <script src="scripts/api.js"></script>
         <title>Cats</title>
     </head>
     <body>
         <div class="add-form">
             <div class="add-form__container">
-                <i class="fa-solid fa-rectangle-xmark"></i>
+                <i class="fa-solid fa-rectangle-xmark close-button"></i>
                 <h2 class="add-form__title">Добавить питомца</h2>
                 <div class="add-form__fields">
                     <div class="cat-img"></div>
@@ -23,7 +25,7 @@
                     <textarea name="description" placeholder="Описание" class="cat-description add-form__input"></textarea>
                     <div class="liked">
                         Любимчик
-                        <i class="fa-regular fa-circle-check"></i>
+                        <i class="fa-regular fa-circle-check like"></i>
                     </div>
                     <input type="text" name="photo" placeholder="Ссылка на фото" class="add-form__input">
                     <button class="submit-button" type="submit">Добавить котика</button>
@@ -45,13 +47,6 @@
             <main>
                 <div class="container main__container">
                     <div class="cards__container">
-                        <div class="cat-card">
-                            <i class="fa-sharp fa-solid fa-heart"></i>
-                            <div class="cat-card__content">
-                                <p class="cat-name">Name</p>
-                                <i class="fa-sharp fa-solid fa-magnifying-glass-plus"></i>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </main>

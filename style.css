@@ -54,7 +54,11 @@ a {
 .add-button {
     cursor: pointer;
     font-size: 32px;
-    transition: 0.3s;
+    transition: 0.2s;
+}
+
+.add-button:hover {
+    color: rgb(141, 141, 141);
 }
 
 .main__container {
@@ -68,13 +72,14 @@ a {
 }
 
 .cat-card {
-    background-color: aqua;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    height: 166px;
     padding: 10px;
     border-radius: 10px;
+    background-size: cover;
+    font-size: 20px;
 }
 
 .cat-card__content {
@@ -85,10 +90,26 @@ a {
 
 .cat-name {
     margin: 0;
-    margin-right: 5px;
+    margin-left: 25px;
+}
+
+.cat-name::after {
+    position: relative;
+    left: 5px;
+    font-family: FontAwesome;
+    content: "\f00e";
+}
+
+.active {
+    visibility: visible;
+}
+
+.inactive {
+    visibility: hidden;
 }
 
 .fa-heart {
+    margin-bottom: 50px;
     align-self: flex-end;
     font-size: 1.5em;
     color: rgb(216, 4, 4);
@@ -137,7 +158,15 @@ a {
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color:#000000c0
+    background-color:#000000c0;
+    transition: 0.3s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.active {
+    visibility: visible;
+    opacity: 1;
 }
 
 .add-form__container {
@@ -159,13 +188,14 @@ a {
     padding: 8px;
 }
 
-.fa-rectangle-xmark {
+.close-button {
     align-self: flex-end;
     font-size: 2em;
     transition: 0.2s;
 }
 
-.fa-rectangle-xmark:hover {
+.close-button:hover {
+    cursor: pointer;
     color:rgb(216, 4, 4);
 }
 
@@ -189,11 +219,15 @@ a {
 .liked {
     display: flex;
     align-items: center;
-    transition: 0.3s;
+    color: rgb(168, 168, 168)
 }
 
 .liked:hover {
     cursor: pointer;
+}
+
+.blue-text {
+    color: rgb(152, 145, 252);
 }
 
 .fa-circle-check {
@@ -208,3 +242,6 @@ a {
     color: #ffffff;
 }
 
+.submit-button {
+    cursor: pointer;
+}
