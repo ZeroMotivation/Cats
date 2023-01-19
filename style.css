@@ -130,3 +130,60 @@ a {
 .fa-telegram:hover {
     color: rgb(34, 158, 217);
 }
+
+.add-form__container {
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f0f5;
+    padding: 20px;
+}
+
+.add-form__title {
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.add-form__input {
+    border: 1px solid rgb(190, 190, 190);
+    border-radius: 3px;
+    padding: 8px;
+}
+
+.fa-rectangle-xmark {
+    align-self: flex-end;
+    font-size: 2em;
+}
+
+.add-form__fields {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.cat-img {
+    grid-row: span 3;
+    background-image: url(images/cat.jpg);
+    background-size: cover;
+}
+
+.cat-description {
+    grid-row: span 2;
+}
+
+.liked {
+    display: flex;
+    align-items: center;
+}
+
+.fa-circle-check {
+    margin-left: 10px;
+    font-size: 1.5em;
+}
+
+.submit-button {
+    border-width: 0px;
+    border-radius: 10px;
+    background-color: #000000;
+    color: #ffffff;
+    
+}
