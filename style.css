@@ -162,6 +162,11 @@ a {
     transition: 0.3s;
     visibility: hidden;
     opacity: 0;
+    z-index: 3;
+}
+
+.add-form__favourite:checked {
+    color: black;
 }
 
 .active {

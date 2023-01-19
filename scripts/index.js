@@ -4,11 +4,21 @@ const closeBtn = document.querySelector('.close-button');
 const cards = document.querySelector('.cards__container');
 const likeBtn = document.querySelector('.liked');
 
+let favourite = false;
+
 addBtn.addEventListener('click', () => popup.classList.toggle('active'));
+
 closeBtn.addEventListener('click', () => {
     likeBtn.classList.remove('blue-text');
     popup.classList.toggle('active');
 });
+
+likeBtn.addEventListener('click', () => {
+    likeBtn.classList.toggle('blue-text');
+    favourite = !favourite;
+    console.log(favourite)
+})
+
 
 cats.forEach((cat) => {
     let card = `<div class="cat-card" style="background-image: url(${cat.img_link});">
@@ -19,9 +29,5 @@ cats.forEach((cat) => {
     </div>
     </div>`;
     cards.innerHTML += card;
-})
-
-likeBtn.addEventListener('click', () => {
-    likeBtn.classList.toggle('blue-text');
 })
 
