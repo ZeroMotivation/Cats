@@ -58,7 +58,6 @@ a {
 }
 
 .main__container {
-    flex: 1 1 auto;
     min-height: calc(100vh - 180px);
 }
 
@@ -131,11 +130,22 @@ a {
     color: rgb(34, 158, 217);
 }
 
+.add-form {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color:#000000c0
+}
+
 .add-form__container {
     display: flex;
     flex-direction: column;
     background-color: #f2f0f5;
     padding: 20px;
+    max-width: 600px;
 }
 
 .add-form__title {
@@ -152,6 +162,11 @@ a {
 .fa-rectangle-xmark {
     align-self: flex-end;
     font-size: 2em;
+    transition: 0.2s;
+}
+
+.fa-rectangle-xmark:hover {
+    color:rgb(216, 4, 4);
 }
 
 .add-form__fields {
@@ -168,11 +183,17 @@ a {
 
 .cat-description {
     grid-row: span 2;
+    resize: none;
 }
 
 .liked {
     display: flex;
     align-items: center;
+    transition: 0.3s;
+}
+
+.liked:hover {
+    cursor: pointer;
 }
 
 .fa-circle-check {
@@ -185,5 +206,5 @@ a {
     border-radius: 10px;
     background-color: #000000;
     color: #ffffff;
-    
 }
+

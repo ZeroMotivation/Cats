@@ -10,6 +10,26 @@
         <title>Cats</title>
     </head>
     <body>
+        <div class="add-form">
+            <div class="add-form__container">
+                <i class="fa-solid fa-rectangle-xmark"></i>
+                <h2 class="add-form__title">Добавить питомца</h2>
+                <div class="add-form__fields">
+                    <div class="cat-img"></div>
+                    <input type="number" name="id" placeholder="ID" class="add-form__input">
+                    <input type="number" name="age" placeholder="Возраст" min="0" class="add-form__input">
+                    <input type="text" name="name" placeholder="Имя" class="add-form__input">
+                    <input type="number" name="rating" placeholder="Рейтинг (0-10)" min="0" max="10" class="add-form__input">
+                    <textarea name="description" placeholder="Описание" class="cat-description add-form__input"></textarea>
+                    <div class="liked">
+                        Любимчик
+                        <i class="fa-regular fa-circle-check"></i>
+                    </div>
+                    <input type="text" name="photo" placeholder="Ссылка на фото" class="add-form__input">
+                    <button class="submit-button" type="submit">Добавить котика</button>
+                </div>
+            </div>
+        </div>
         <div class="wrapper">
             <header>
                 <div class="container container-grey header__container">
@@ -30,26 +50,6 @@
                             <div class="cat-card__content">
                                 <p class="cat-name">Name</p>
                                 <i class="fa-sharp fa-solid fa-magnifying-glass-plus"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="add-form">
-                        <div class="add-form__container">
-                            <i class="fa-solid fa-rectangle-xmark"></i>
-                            <h2 class="add-form__title">Добавить питомца</h2>
-                            <div class="add-form__fields">
-                                <div class="cat-img"></div>
-                                <input type="number" name="id" placeholder="ID" class="add-form__input">
-                                <input type="number" name="age" placeholder="Возраст" min="0" class="add-form__input">
-                                <input type="text" name="name" placeholder="Имя" class="add-form__input">
-                                <input type="number" name="rating" placeholder="Рейтинг (0-10)" min="0" max="10" class="add-form__input">
-                                <textarea name="description" placeholder="Описание" class="cat-description add-form__input"></textarea>
-                                <div class="liked">
-                                    Любимчик
-                                    <i class="fa-regular fa-circle-check"></i>
-                                </div>
-                                <input type="text" name="photo" placeholder="Ссылка на фото" class="add-form__input">
-                                <button class="submit-button" type="submit">Добавить котика</button>
                             </div>
                         </div>
                     </div>
