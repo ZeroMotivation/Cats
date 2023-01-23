@@ -50,5 +50,3 @@ cats.forEach((cat) => {
                 </div>`;
     cards.innerHTML += card;
 })
-
-console.log(cats);
