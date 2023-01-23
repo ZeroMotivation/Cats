@@ -19,10 +19,10 @@
                 <h2 class="add-form__title">Добавить питомца</h2>
                 <form name='cats' class="add-form__fields">
                     <div class="cat-img"></div>
-                    <input type="number" name="id" placeholder="ID" class="add-form__input cat-id">
-                    <input type="number" name="age" placeholder="Возраст" min="0" class="add-form__input cat-age">
-                    <input type="text" name="name" placeholder="Имя" class="add-form__input name">
-                    <input type="number" name="rating" placeholder="Рейтинг (0-10)" min="0" max="10" class="add-form__input cat-rating">
+                    <input type="number" name="id" placeholder="ID" class="add-form__input cat-id" required>
+                    <input type="number" name="age" placeholder="Возраст" min="0" class="add-form__input cat-age" required>
+                    <input type="text" name="name" placeholder="Имя" class="add-form__input name" required>
+                    <input type="number" name="rating" placeholder="Рейтинг (0-10)" min="0" max="10" class="add-form__input cat-rating" required>
                     <textarea name="description" placeholder="Описание" class="cat-description add-form__input"></textarea>
                     <label class="checkbox-wrapper">
                         <input type="checkbox" name="favourite" class="like-checkbox" placeholder="">
