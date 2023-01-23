@@ -72,17 +72,37 @@ a {
 }
 
 .cat-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 166px;
-    padding: 10px;
     border-radius: 10px;
     background-size: cover;
     font-size: 20px;
 }
 
+.cat-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:rgba(190, 190, 190, 0.5);
+    border-radius: 10px;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;;
+    object-fit: cover;
+}
+
 .cat-card__content {
+    position: absolute;
+    top: 45%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -91,13 +111,15 @@ a {
 .cat-name {
     margin: 0;
     margin-left: 25px;
+    cursor: pointer;
 }
 
-.cat-name::after {
-    position: relative;
-    left: 5px;
-    font-family: FontAwesome;
+.cat-name:hover:after {
     content: "\f00e";
+    position: absolute;
+    top: 2px;
+    right: -2px;
+    font-family: FontAwesome;
 }
 
 .active {
@@ -109,7 +131,9 @@ a {
 }
 
 .fa-heart {
-    margin-bottom: 50px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
     align-self: flex-end;
     font-size: 1.5em;
     color: rgb(216, 4, 4);
@@ -221,18 +245,23 @@ a {
     resize: none;
 }
 
-.liked {
+.checkbox-wrapper {
     display: flex;
     align-items: center;
-    color: rgb(168, 168, 168)
+    position: relative;
 }
 
-.liked:hover {
-    cursor: pointer;
+.like-checkbox {
+    appearance: none;
+    position: absolute;
 }
 
-.blue-text {
-    color: rgb(152, 145, 252);
+.like-checkbox:checked~.checkbox__label{
+    color:rgb(34, 158, 217);
+}
+
+.like-checkbox:checked~.fake-checkbox{
+    color:rgb(34, 158, 217);
 }
 
 .fa-circle-check {

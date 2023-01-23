@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, 
         initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="images/paw-solid.svg">
         <script src="https://kit.fontawesome.com/9b1ffdd68f.js" crossorigin="anonymous"></script>
         <script src="scripts/cats.js"></script>
         <script src="scripts/api.js"></script>
@@ -16,20 +17,21 @@
             <div class="add-form__container">
                 <i class="fa-solid fa-rectangle-xmark close-button"></i>
                 <h2 class="add-form__title">Добавить питомца</h2>
-                <div class="add-form__fields">
+                <form name='cats' class="add-form__fields">
                     <div class="cat-img"></div>
-                    <input type="number" name="id" placeholder="ID" class="add-form__input">
-                    <input type="number" name="age" placeholder="Возраст" min="0" class="add-form__input">
-                    <input type="text" name="name" placeholder="Имя" class="add-form__input">
-                    <input type="number" name="rating" placeholder="Рейтинг (0-10)" min="0" max="10" class="add-form__input">
+                    <input type="number" name="id" placeholder="ID" class="add-form__input cat-id">
+                    <input type="number" name="age" placeholder="Возраст" min="0" class="add-form__input cat-age">
+                    <input type="text" name="name" placeholder="Имя" class="add-form__input name">
+                    <input type="number" name="rating" placeholder="Рейтинг (0-10)" min="0" max="10" class="add-form__input cat-rating">
                     <textarea name="description" placeholder="Описание" class="cat-description add-form__input"></textarea>
-                    <div class="liked">
-                        Любимчик
-                        <i class="fa-regular fa-circle-check like"></i>
-                    </div>
-                    <input type="text" name="photo" placeholder="Ссылка на фото" class="add-form__input">
-                    <button class="submit-button" type="submit">Добавить котика</button>
-                </div>
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox" name="favourite" class="like-checkbox" placeholder="">
+                        <span class="checkbox__label">Любимчик</span>
+                        <span class="fake-checkbox"><i class="fa-regular fa-circle-check like"></i></span>
+                    </label>
+                    <input type="text" name="img_link" placeholder="Ссылка на фото" class="add-form__input cat-photo">
+                    <button name="submit-button" class="submit-button" type="submit">Добавить котика</button>
+                </form>
             </div>
         </div>
         <div class="wrapper">
