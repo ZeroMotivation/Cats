@@ -17,15 +17,59 @@ const createCard = (cat) => {
             </div>`
 } 
 
-addBtn.addEventListener('click', () => popup.classList.toggle('active'));
+const addCards = (data) => {
+    data.forEach((cat) => cards.innerHTML += createCard(cat))
+}
 
-closeBtn.addEventListener('click', () => {
+const loadData = async (url) => {
+    let response = await fetch(url);
+
+    if(response.ok) {
+        const json = await response.json();
+        addCards(json.data);
+    }
+    else {
+        console.log(`ERROR ${response.status}`);
+    }
+} 
+
+const addData = async (url, data) => {
+    let response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(data)
+    })
+}
+
+const deleteData = async (data, id) => {
+    let response = await fetch(url, {
+        method: 'DELETE'
+    })
+}
+
+cards.addEventListener('click', (evt) => {
+    const target = evt.target;
+    if(target.classList.contains('cat-card')) {
+        console.log(target);
+        popup.classList.toggle('active');
+    }
+})
+
+addBtn.addEventListener('click', () => {
     popup.classList.toggle('active');
 });
 
+closeBtn.addEventListener('click', () => {
+    popup.classList.toggle('active');
+    form.reset();
+});
+
+
 form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-
+  
     let newCat = {};
 
     for(let i = 0; i < inputs.length; i++) {
@@ -38,17 +82,16 @@ form.addEventListener('submit', (evt) => {
         }
     }
 
-    cats.push(newCat);
+    addData("https://sb-cats.herokuapp.com/api/2/nikita-guderyanov/add", newCat)
 
-    const lastCat = cats[cats.length - 1];
-
-    let card = createCard(lastCat);
+    let card = createCard(newCat);
     cards.innerHTML += card;
 
     popup.classList.remove('active');
+    form.reset();
 })
 
-cats.forEach((cat) => {
-    let card = createCard(cat);
-    cards.innerHTML += card;
-})
+addCards(cats);
+loadData("https://sb-cats.herokuapp.com/api/2/nikita-guderyanov/show");
+
+

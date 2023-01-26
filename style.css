@@ -80,6 +80,7 @@ a {
     border-radius: 10px;
     background-size: cover;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .cat-card::before {
@@ -111,10 +112,9 @@ a {
 .cat-name {
     margin: 0;
     margin-left: 25px;
-    cursor: pointer;
 }
 
-.cat-name:hover:after {
+.cat-card:hover .cat-name:after {
     content: "\f00e";
     position: absolute;
     top: 2px;
