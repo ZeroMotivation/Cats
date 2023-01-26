@@ -9,7 +9,7 @@ const inputs = form.elements;
 const createCard = (cat) => {
     return `<div class="cat-card">
                 <img src="${cat.img_link}" alt="" class="card-img">
-                <i class="fa-sharp fa-solid fa-heart ${cat.favourite ? "active" : "inactive"}"></i>
+                    <i class="fa-sharp fa-solid fa-heart ${cat.favourite ? "active" : "inactive"}"></i>
                 <div class="cat-card__content">
                     <p class="cat-name">${cat.name}</p>
                     <i class="fa-sharp fa-solid fa-magnifying-glass-plus inactive"></i>
@@ -22,14 +22,25 @@ const addCards = (data) => {
 }
 
 const loadData = async (url) => {
-    let response = await fetch(url);
+    if(localStorage.getItem('cats') === null) {
+        console.log("server")
+        let response = await fetch(url);
 
-    if(response.ok) {
-        const json = await response.json();
-        addCards(json.data);
-    }
+        if(response.ok) {
+            const json = await response.json();
+            const data = json.data;
+            localStorage.setItem('cats', JSON.stringify(data));
+            addCards(data);
+        }
+        else {
+            console.log(`ERROR ${response.status}`);
+        }
+    } 
     else {
-        console.log(`ERROR ${response.status}`);
+        const data = localStorage.cats;
+        const parsed = JSON.parse(data);
+        console.log(parsed);
+        addCards(parsed);
     }
 } 
 
@@ -52,7 +63,6 @@ const deleteData = async (data, id) => {
 cards.addEventListener('click', (evt) => {
     const target = evt.target;
     if(target.classList.contains('cat-card')) {
-        console.log(target);
         popup.classList.toggle('active');
     }
 })
@@ -93,5 +103,4 @@ form.addEventListener('submit', (evt) => {
 
 addCards(cats);
 loadData("https://sb-cats.herokuapp.com/api/2/nikita-guderyanov/show");
-
 
