@@ -5,10 +5,12 @@ const cards = document.querySelector('.cards__container');
 
 const form = document.forms.cats;
 const inputs = form.elements;
+const imgLink = form.querySelector('.cat-photo');
+const catImg = form.querySelector('.cat-img');
 
 const createCard = (cat) => {
-    return `<div class="cat-card">
-                <img src="${cat.img_link}" alt="" class="card-img">
+    return `<div id="${cat.id}"class="cat-card">
+                <img src="${cat.img_link || images/cat.jpg}" alt="" class="card-img">
                     <i class="fa-sharp fa-solid fa-heart ${cat.favourite ? "active" : "inactive"}"></i>
                 <div class="cat-card__content">
                     <p class="cat-name">${cat.name}</p>
@@ -54,11 +56,7 @@ const addData = async (url, data) => {
     })
 }
 
-const deleteData = async (data, id) => {
-    let response = await fetch(url, {
-        method: 'DELETE'
-    })
-}
+imgLink.addEventListener('change', () => catImg.style.backgroundImage = `url(${imgLink.value})`);
 
 cards.addEventListener('click', (evt) => {
     const target = evt.target;
@@ -101,6 +99,5 @@ form.addEventListener('submit', (evt) => {
     form.reset();
 })
 
-addCards(cats);
 loadData("https://sb-cats.herokuapp.com/api/2/nikita-guderyanov/show");
 
