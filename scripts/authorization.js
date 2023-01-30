@@ -15,7 +15,7 @@ authorizationForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const inputs = authorizationForm.elements;
     for(let i = 0; i < inputs.length; i++) {
-        if(inputs[i].name !== 'sign-in') {
+        if(inputs[i].type !== 'button') {
             document.cookie = `${inputs[i].name}=${inputs[i].value}`;
         }
     }

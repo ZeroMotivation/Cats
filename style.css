@@ -281,10 +281,11 @@ a {
     border-radius: 10px;
     background-color: #000000;
     color: #ffffff;
+    cursor: pointer;
 }
 
-.submit-button {
-    cursor: pointer;
+.submit-button:hover {
+    animation: 0.5s scale 1 normal;
 }
 
 .authorization {

@@ -57,17 +57,22 @@ cards.addEventListener('click', async (evt) => {
     const target = evt.target;
     if(target.classList.contains('cat-card')) {
         popup.classList.toggle('active');
+        form.classList.add('update');
+        form.classList.remove('add');
         const catId = target.id;
         const catData = storage.find((cat) => cat.id == catId);
 
         inputs.id.value = catData.id;
-        inputs.id.setAttribute('disabled', 'disabled');
+        inputs.id.setAttribute('disabled', 'true');
         inputs.name.value = catData.name;
         inputs.age.value = catData.age;
         inputs.rate.value = catData.rate;
         inputs.description.value = catData.description;
         inputs.img_link.value = catData.img_link;
         catImg.style.backgroundImage = `url(${imgLink.value})`;
+        if(catData.favourite) {
+            inputs.favourite.checked = true;
+        }
     }
     else if(target.classList.contains('fa-trash')) {
         const deletedId = target.parentNode.id;
@@ -89,7 +94,10 @@ cards.addEventListener('click', async (evt) => {
 
 addBtn.addEventListener('click', () => {
     popup.classList.toggle('active');
+    inputs.id.removeAttribute('disabled');
     catImg.style.backgroundImage = 'url(images/cat.jpg)';
+    form.classList.add('add');
+    form.classList.remove('update');
 });
 
 closeBtn.addEventListener('click', () => {
@@ -99,31 +107,35 @@ closeBtn.addEventListener('click', () => {
 
 form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-  
-    let newCat = {};
+    if(form.classList.contains('add')) {
+        let newCat = {};
 
-    for(let i = 0; i < inputs.length; i++) {
-        if(inputs[i].name !== 'submit') {
-            newCat[inputs[i].name] = inputs[i].value;
+        for(let i = 0; i < inputs.length; i++) {
+            if(inputs[i].name !== 'submit') {
+                newCat[inputs[i].name] = inputs[i].value;
+            }
+            if(inputs[i].type === 'checkbox') {
+                newCat[inputs[i].name] = inputs[i].checked;
+            }
+            console.log(inputs[i].value);
         }
-        if(inputs[i].type === 'checkbox') {
-            newCat[inputs[i].name] = inputs[i].checked;
+    
+        await api.addCat(newCat);
+        
+        let card = createCard(newCat);
+        cards.innerHTML += card;
+    
+        const response = await api.getCats();
+        if(response.ok) {
+            updStorage(response, storage);
         }
-        console.log(inputs[i].value);
+        
+        popup.classList.remove('active');
+        form.reset();
     }
-
-    await api.addCat(newCat);
-    
-    let card = createCard(newCat);
-    cards.innerHTML += card;
-
-    const response = await api.getCats();
-    if(response.ok) {
-        updStorage(response, storage);
+    if(form.classList.contains('update')) {
+        console.log('updated');
     }
-    
-    popup.classList.remove('active');
-    form.reset();
 })
 
 loadData();
