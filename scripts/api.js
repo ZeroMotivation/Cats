@@ -23,6 +23,11 @@ class Api {
             body: JSON.stringify(body)
         });
     }
+    deleteCat(id) {
+        return fetch(`${this.url}${this.name}/delete/${id}`, {
+            method: 'DELETE'
+        });
+    }
     updCat(id, body) {
         return fetch(`${this.url}${this.name}/update/${id}`, {
             method: 'PUT',

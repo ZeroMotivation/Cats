@@ -14,7 +14,8 @@ let storage = localStorage.getItem('cats');
 const createCard = (cat) => {
     return `<div id="${cat.id}"class="cat-card">
                 <img src="${cat.img_link || 'images/cat.jpg'}" alt="" class="card-img">
-                    <i class="fa-sharp fa-solid fa-heart ${cat.favourite ? "active" : "inactive"}"></i>
+                <i class="fa-sharp fa-solid fa-heart ${cat.favourite ? "active" : "inactive"}"></i>
+                <i class="fa-solid fa-trash"></i>
                 <div class="cat-card__content">
                     <p class="cat-name">${cat.name}</p>
                     <i class="fa-sharp fa-solid fa-magnifying-glass-plus inactive"></i>
@@ -23,6 +24,7 @@ const createCard = (cat) => {
 } 
 
 const addCards = (data) => {
+    cards.innerHTML = "";
     data.forEach((cat) => cards.innerHTML += createCard(cat))
 }
 
@@ -51,10 +53,26 @@ const loadData = async () => {
 
 imgLink.addEventListener('change', () => catImg.style.backgroundImage = `url(${imgLink.value})`);
 
-cards.addEventListener('click', (evt) => {
+cards.addEventListener('click', async (evt) => {
     const target = evt.target;
     if(target.classList.contains('cat-card')) {
         popup.classList.toggle('active');
+    }
+    else if(target.classList.contains('fa-trash')) {
+        const deletedId = target.parentNode.id;
+        const response = await api.deleteCat(deletedId);
+
+        if(response.message == 'ok') {
+            storage = storage.filter((cat) => cat.id != deletedId);
+            localStorage.setItem('cats', JSON.stringify(storage));
+            addCards(storage);
+        }
+        else {
+            console.log(response.status);
+        }
+    }
+    else {
+        return;
     }
 })
 

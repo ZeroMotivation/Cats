@@ -130,6 +130,19 @@ a {
 .inactive {
     visibility: hidden;
 }
+
+.fa-trash {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 1.2em;
+    color: rgb(65, 65, 65);
+    transition-duration: 0.2s;
+}
+
+.fa-trash:hover {
+    color:rgb(0, 0, 0);
+}
  
 .fa-heart {
     position: absolute;
@@ -277,71 +290,6 @@ a {
 }
 
 .submit-button {
-    cursor: pointer;
-}
-
-.modal-window {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #000000c0;
-}
-
-.modal-window__container {
-    max-width: 400px;
-    background-color:rgb(223, 223, 223)
-}
-
-.modal-window__container {
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-window__header {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 10px;
-    border-bottom: 1px solid #838383;
-    background-color:rgba(176, 218, 252, 0.397)
-}
-
-.modal-window__title {
-    margin: 0px;
-    padding: 5px 10px;
-}
-
-.edit-form {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-}
-
-.edit-form__right {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.edit-form__left {
-    display: flex;
-    flex-direction: column;
-}
-
-.edit-form__cat-img {
-    width: 200px;
-    height: 150px;
-    background-image: url(images/cat.jpg);
-    background-size: cover;
-}
-
-.fa-trash {
-    font-size: 1.5em;
-    color:rgb(75, 75, 75);
-    transition-duration: 0.3s;
-}
-
-.fa-trash:hover {
-    color: rgb(0, 0, 0);
     cursor: pointer;
 }
 
