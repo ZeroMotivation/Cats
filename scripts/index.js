@@ -8,9 +8,12 @@ const inputs = form.elements;
 const imgLink = form.querySelector('.cat-photo');
 const catImg = form.querySelector('.cat-img');
 
+const api = new Api('nikita-guderyanov');
+let storage = localStorage.getItem('cats');
+
 const createCard = (cat) => {
     return `<div id="${cat.id}"class="cat-card">
-                <img src="${cat.img_link || images/cat.jpg}" alt="" class="card-img">
+                <img src="${cat.img_link || 'images/cat.jpg'}" alt="" class="card-img">
                     <i class="fa-sharp fa-solid fa-heart ${cat.favourite ? "active" : "inactive"}"></i>
                 <div class="cat-card__content">
                     <p class="cat-name">${cat.name}</p>
@@ -23,38 +26,28 @@ const addCards = (data) => {
     data.forEach((cat) => cards.innerHTML += createCard(cat))
 }
 
-const loadData = async (url) => {
-    if(localStorage.getItem('cats') === null) {
-        console.log("server")
-        let response = await fetch(url);
+const updStorage = async (response, storage) => {
+    const json = await response.json();
+    storage = json.data;
+    localStorage.setItem('cats', JSON.stringify(storage));
+}
 
+storage = storage ? JSON.parse(storage) : [];
+const loadData = async () => {
+    if(storage.length === 0) {
+        let response = await api.getCats();
         if(response.ok) {
-            const json = await response.json();
-            const data = json.data;
-            localStorage.setItem('cats', JSON.stringify(data));
-            addCards(data);
+            updStorage(response, storage);
+            addCards(storage);
         }
         else {
             console.log(`ERROR ${response.status}`);
         }
-    } 
+    }
     else {
-        const data = localStorage.cats;
-        const parsed = JSON.parse(data);
-        console.log(parsed);
-        addCards(parsed);
+        addCards(storage);
     }
 } 
-
-const addData = async (url, data) => {
-    let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(data)
-    })
-}
 
 imgLink.addEventListener('change', () => catImg.style.backgroundImage = `url(${imgLink.value})`);
 
@@ -74,8 +67,7 @@ closeBtn.addEventListener('click', () => {
     form.reset();
 });
 
-
-form.addEventListener('submit', (evt) => {
+form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
   
     let newCat = {};
@@ -90,14 +82,19 @@ form.addEventListener('submit', (evt) => {
         }
     }
 
-    addData("https://sb-cats.herokuapp.com/api/2/nikita-guderyanov/add", newCat)
-
+    await api.addCat(newCat);
+    
     let card = createCard(newCat);
     cards.innerHTML += card;
 
+    const response = await api.getCats();
+    if(response.ok) {
+        updStorage(response, storage);
+    }
+    
     popup.classList.remove('active');
     form.reset();
 })
 
-loadData("https://sb-cats.herokuapp.com/api/2/nikita-guderyanov/show");
+loadData();
 
