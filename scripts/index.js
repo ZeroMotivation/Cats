@@ -8,6 +8,9 @@ const inputs = form.elements;
 const imgLink = form.querySelector('.cat-photo');
 const catImg = form.querySelector('.cat-img');
 
+const authorizationForm = document.forms.authorization;
+const authorization = document.querySelector('.authorization');
+
 const api = new Api('nikita-guderyanov');
 let storage = localStorage.getItem('cats');
 
@@ -28,6 +31,21 @@ const addCards = (data) => {
     data.forEach((cat) => cards.innerHTML += createCard(cat))
 }
 
+const parseCookie = () => {
+    let greetings = document.cookie;
+    let name = greetings.slice(greetings.indexOf('=') + 1, greetings.length) + '!';
+    console.log('Привет,', name);
+}
+
+const initPage = () => {
+    if(!document.cookie.length) {
+        authorization.classList.toggle('active');
+    }
+    else {
+        parseCookie();
+    }
+}
+
 const updStorage = async (response, storage) => {
     const json = await response.json();
     storage = json.data;
@@ -36,7 +54,7 @@ const updStorage = async (response, storage) => {
 
 storage = storage ? JSON.parse(storage) : [];
 const loadData = async () => {
-    if(storage.length === 0) {
+    if(!storage.length) {
         let response = await api.getCats();
         if(response.ok) {
             updStorage(response, storage);
@@ -51,18 +69,37 @@ const loadData = async () => {
     }
 } 
 
-imgLink.addEventListener('change', () => catImg.style.backgroundImage = `url(${imgLink.value})`);
+authorizationForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const inputs = authorizationForm.elements;
+    document.cookie = `${inputs[0].name}=${inputs[0].value}`;
+    parseCookie();
+    authorization.classList.toggle('active');
+})
+
+imgLink.addEventListener('input', () => catImg.style.backgroundImage = `url(${imgLink.value})`);
 
 cards.addEventListener('click', async (evt) => {
     const target = evt.target;
     if(target.classList.contains('cat-card')) {
         popup.classList.toggle('active');
+        const catId = target.id;
+        const catData = storage.find((cat) => cat.id == catId);
+
+        inputs.id.value = catData.id;
+        inputs.id.setAttribute('disabled', 'disabled');
+        inputs.name.value = catData.name;
+        inputs.age.value = catData.age;
+        inputs.rate.value = catData.rate;
+        inputs.description.value = catData.description;
+        inputs.img_link.value = catData.img_link;
+        catImg.style.backgroundImage = `url(${imgLink.value})`;
     }
     else if(target.classList.contains('fa-trash')) {
         const deletedId = target.parentNode.id;
         const response = await api.deleteCat(deletedId);
 
-        if(response.message == 'ok') {
+        if(response.ok) {
             storage = storage.filter((cat) => cat.id != deletedId);
             localStorage.setItem('cats', JSON.stringify(storage));
             addCards(storage);
@@ -78,6 +115,7 @@ cards.addEventListener('click', async (evt) => {
 
 addBtn.addEventListener('click', () => {
     popup.classList.toggle('active');
+    catImg.style.backgroundImage = 'url(images/cat.jpg)';
 });
 
 closeBtn.addEventListener('click', () => {
@@ -93,11 +131,11 @@ form.addEventListener('submit', async (evt) => {
     for(let i = 0; i < inputs.length; i++) {
         if(inputs[i].name !== 'submit') {
             newCat[inputs[i].name] = inputs[i].value;
-            inputs[i].value = '';
         }
         if(inputs[i].type === 'checkbox') {
             newCat[inputs[i].name] = inputs[i].checked;
         }
+        console.log(inputs[i].value);
     }
 
     await api.addCat(newCat);
@@ -115,4 +153,5 @@ form.addEventListener('submit', async (evt) => {
 })
 
 loadData();
+initPage();
 
