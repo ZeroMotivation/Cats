@@ -8,9 +8,6 @@ const inputs = form.elements;
 const imgLink = form.querySelector('.cat-photo');
 const catImg = form.querySelector('.cat-img');
 
-const authorizationForm = document.forms.authorization;
-const authorization = document.querySelector('.authorization');
-
 const api = new Api('nikita-guderyanov');
 let storage = localStorage.getItem('cats');
 
@@ -29,21 +26,6 @@ const createCard = (cat) => {
 const addCards = (data) => {
     cards.innerHTML = "";
     data.forEach((cat) => cards.innerHTML += createCard(cat))
-}
-
-const parseCookie = () => {
-    let greetings = document.cookie;
-    let name = greetings.slice(greetings.indexOf('=') + 1, greetings.length) + '!';
-    console.log('Привет,', name);
-}
-
-const initPage = () => {
-    if(!document.cookie.length) {
-        authorization.classList.toggle('active');
-    }
-    else {
-        parseCookie();
-    }
 }
 
 const updStorage = async (response, storage) => {
@@ -68,14 +50,6 @@ const loadData = async () => {
         addCards(storage);
     }
 } 
-
-authorizationForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const inputs = authorizationForm.elements;
-    document.cookie = `${inputs[0].name}=${inputs[0].value}`;
-    parseCookie();
-    authorization.classList.toggle('active');
-})
 
 imgLink.addEventListener('input', () => catImg.style.backgroundImage = `url(${imgLink.value})`);
 
@@ -153,5 +127,5 @@ form.addEventListener('submit', async (evt) => {
 })
 
 loadData();
-initPage();
+
 
