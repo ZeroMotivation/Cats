@@ -105,21 +105,26 @@ closeBtn.addEventListener('click', () => {
     form.reset();
 });
 
+const createCatObj = (inputs) => {
+    let newCat = {};
+
+    for(let i = 0; i < inputs.length; i++) {
+        if(inputs[i].name !== 'submit') {
+            newCat[inputs[i].name] = inputs[i].value;
+        }
+        if(inputs[i].type === 'checkbox') {
+            newCat[inputs[i].name] = inputs[i].checked;
+        }
+    }
+
+    return newCat;
+}
+
 form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
+    let newCat = createCatObj(inputs);
     if(form.classList.contains('add')) {
-        let newCat = {};
 
-        for(let i = 0; i < inputs.length; i++) {
-            if(inputs[i].name !== 'submit') {
-                newCat[inputs[i].name] = inputs[i].value;
-            }
-            if(inputs[i].type === 'checkbox') {
-                newCat[inputs[i].name] = inputs[i].checked;
-            }
-            console.log(inputs[i].value);
-        }
-    
         await api.addCat(newCat);
         
         let card = createCard(newCat);
@@ -129,13 +134,22 @@ form.addEventListener('submit', async (evt) => {
         if(response.ok) {
             updStorage(response, storage);
         }
-        
-        popup.classList.remove('active');
-        form.reset();
     }
     if(form.classList.contains('update')) {
-        console.log('updated');
+
+        const updId = inputs.id.value;
+        const response = await api.updCat(updId, newCat);
+
+        if(response.ok) {
+            const index = storage.findIndex((cat) => cat.id == updId);
+            storage[index] = newCat;
+            localStorage.setItem('cats', JSON.stringify(storage));
+            addCards(storage);
+        }
     }
+
+    popup.classList.remove('active');
+    form.reset();
 })
 
 loadData();
