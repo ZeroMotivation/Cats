@@ -19,17 +19,17 @@
                 <h2 class="add-form__title">Анкета питомца</h2>
                 <form name='cats' class="add-form__fields">
                     <div class="cat-img"></div>
-                    <input type="number" name="id" placeholder="ID" class="add-form__input cat-id input" required>
-                    <input type="number" name="age" placeholder="Возраст" min="0" class="add-form__input cat-age input" required>
-                    <input type="text" name="name" placeholder="Имя" class="add-form__input name input" required>
-                    <input type="number" name="rate" placeholder="Рейтинг (0-10)" min="0" max="10" class="add-form__input cat-rating input" required>
-                    <textarea name="description" placeholder="Описание" class="cat-description add-form__input input"></textarea>
+                    <input type="number" name="id" placeholder="ID" title="ID" class="add-form__input cat-id input" required>
+                    <input type="number" name="age" placeholder="Возраст" min="0" title="Возраст" class="add-form__input cat-age input" required>
+                    <input type="text" name="name" placeholder="Имя" title="Имя" class="add-form__input name input" required>
+                    <input type="number" name="rate" placeholder="Рейтинг (0-10)" min="0" max="10" title="Рейтинг" class="add-form__input cat-rating input" required>
+                    <textarea name="description" placeholder="Описание" title="Описание" class="cat-description add-form__input input"></textarea>
                     <label class="checkbox-wrapper">
                         <input type="checkbox" name="favourite" class="like-checkbox" placeholder="">
                         <span class="checkbox__label">Любимчик</span>
                         <span class="fake-checkbox"><i class="fa-regular fa-circle-check like"></i></span>
                     </label>
-                    <input type="text" name="img_link" placeholder="Ссылка на фото" class="add-form__input cat-photo input">
+                    <input type="text" name="img_link" placeholder="Ссылка на фото" title="Ссылка на фото" class="add-form__input cat-photo input">
                     <button name="submit-button" class="submit-button" type="submit">Записать</button>
                 </form>
             </div>

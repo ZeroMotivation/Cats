@@ -285,7 +285,7 @@ a {
     border-radius: 10px;
     background-color: #000000;
     color: #ffffff;
-    cursor: pointer;
+    cursor: pointer; 
 }
 
 .submit-button:hover {
