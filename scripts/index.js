@@ -25,13 +25,10 @@ const createCard = (cat) => {
 
 const addCards = (data) => {
     cards.innerHTML = "";
-    data.forEach((cat) => cards.innerHTML += createCard(cat))
-}
-
-const updStorage = async (response, storage) => {
-    const json = await response.json();
-    storage = json.data;
-    localStorage.setItem('cats', JSON.stringify(storage));
+    data.forEach((cat) => {
+        let card = createCard(cat);
+        cards.innerHTML += card;
+    })
 }
 
 storage = storage ? JSON.parse(storage) : [];
@@ -39,7 +36,9 @@ const loadData = async () => {
     if(!storage.length) {
         let response = await api.getCats();
         if(response.ok) {
-            updStorage(response, storage);
+            const json = await response.json();
+            storage = [...json.data];
+            localStorage.setItem('cats', JSON.stringify(storage));
             addCards(storage);
         }
         else {
@@ -56,25 +55,23 @@ imgLink.addEventListener('input', () => catImg.style.backgroundImage = `url(${im
 cards.addEventListener('click', async (evt) => {
     const target = evt.target;
     if(target.classList.contains('cat-card')) {
+        const id = target.id;
+        const cat = storage.find((cat) => cat.id == id);
         popup.classList.toggle('active');
-        form.classList.add('update');
-        form.classList.remove('add');
-        const catId = target.id;
-        const catData = storage.find((cat) => cat.id == catId);
 
-        inputs.id.value = catData.id;
-        inputs.id.setAttribute('disabled', 'true');
-        inputs.name.value = catData.name;
-        inputs.age.value = catData.age;
-        inputs.rate.value = catData.rate;
-        inputs.description.value = catData.description;
-        inputs.img_link.value = catData.img_link;
-        catImg.style.backgroundImage = `url(${imgLink.value})`;
-        if(catData.favourite) {
+        inputs.id.value = cat.id;
+        inputs.id.setAttribute('disabled', true);
+        inputs.name.value = cat.name;
+        inputs.age.value = cat.age;
+        inputs.rate.value = cat.rate;
+        inputs.description.value = cat.description;
+        inputs.img_link.value = cat.img_link;
+        if(cat.favourite) {
             inputs.favourite.checked = true;
         }
+        catImg.style.backgroundImage = `url(${cat.img_link})`;
     }
-    else if(target.classList.contains('fa-trash')) {
+    if(target.classList.contains('fa-trash')) {
         const deletedId = target.parentNode.id;
         const response = await api.deleteCat(deletedId);
 
@@ -116,13 +113,12 @@ const createCatObj = (inputs) => {
             newCat[inputs[i].name] = inputs[i].checked;
         }
     }
-
     return newCat;
 }
 
 form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-    let newCat = createCatObj(inputs);
+    const newCat = createCatObj(inputs);
     if(form.classList.contains('add')) {
 
         await api.addCat(newCat);
@@ -132,7 +128,8 @@ form.addEventListener('submit', async (evt) => {
     
         const response = await api.getCats();
         if(response.ok) {
-            updStorage(response, storage);
+            storage.push(newCat);
+            localStorage.setItem('cats', JSON.stringify(storage));
         }
     }
     if(form.classList.contains('update')) {
