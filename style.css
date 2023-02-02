@@ -210,12 +210,14 @@ a {
     display: flex;
     flex-direction: column;
     background-color: #f2f0f5;
-    padding: 20px;
 }
 
 .add-form__title {
     margin: 0;
-    margin-bottom: 20px;
+    padding-left: 20px;
+    line-height: 2em;
+    background-color:#8b96f7;
+    color: #ffffff;
 }
 
 .input {
@@ -225,6 +227,7 @@ a {
 }
 
 .close-button {
+    margin: 10px;
     align-self: flex-end;
     font-size: 2em;
     transition: 0.2s;
@@ -239,6 +242,7 @@ a {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    padding: 20px;
 }
 
 .cat-img {
@@ -285,6 +289,7 @@ a {
 }
 
 .submit-button:hover {
+    background-color:#9735d8;
     animation: 0.5s scale 1 normal;
 }
 
