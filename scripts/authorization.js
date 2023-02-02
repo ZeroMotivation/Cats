@@ -2,12 +2,12 @@ const authorizationForm = document.forms.authorization;
 const authorization = document.querySelector('.authorization');
 
 const parseCookie = () => {
-    let greetings = document.cookie;
+    const greetings = document.cookie;
 
-    const start = greetings.indexOf('=') + 1;
+    const start = greetings.indexOf('=');
     const end = greetings.indexOf(';');
 
-    let name = greetings.slice(start, end) + '!';
+    const name = greetings.slice(start + 1, end) + '!';
     console.log('Привет,', name);
 }
 
