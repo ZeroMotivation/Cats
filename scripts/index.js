@@ -36,7 +36,7 @@ const addCards = (data) => {
 storage = storage ? JSON.parse(storage) : [];
 const loadData = async () => {
     if(!storage.length) {
-        let response = await api.getCats();
+        const response = await api.getCats();
         if(response.ok) {
             const json = await response.json();
             storage = [...json.data];
@@ -134,7 +134,7 @@ form.addEventListener('submit', async (evt) => {
             localStorage.setItem('cats', JSON.stringify(storage));
         }
     }
-    
+
     if(form.classList.contains('update')) {
 
         const updId = inputs.id.value;
