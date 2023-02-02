@@ -8,6 +8,8 @@ const inputs = form.elements;
 const imgLink = form.querySelector('.cat-photo');
 const catImg = form.querySelector('.cat-img');
 
+const defaultCatImgUrl = 'url(images/cat.jpg)';
+
 const api = new Api('nikita-guderyanov');
 let storage = localStorage.getItem('cats');
 
@@ -26,7 +28,7 @@ const createCard = (cat) => {
 const addCards = (data) => {
     cards.innerHTML = "";
     data.forEach((cat) => {
-        let card = createCard(cat);
+        const card = createCard(cat);
         cards.innerHTML += card;
     })
 }
@@ -57,7 +59,10 @@ cards.addEventListener('click', async (evt) => {
     if(target.classList.contains('cat-card')) {
         const id = target.id;
         const cat = storage.find((cat) => cat.id == id);
+
         popup.classList.toggle('active');
+        form.classList.remove('add');
+        form.classList.add('update');
 
         inputs.id.value = cat.id;
         inputs.id.setAttribute('disabled', true);
@@ -65,11 +70,9 @@ cards.addEventListener('click', async (evt) => {
         inputs.age.value = cat.age;
         inputs.rate.value = cat.rate;
         inputs.description.value = cat.description;
+        inputs.favourite.checked = cat.favourite;
         inputs.img_link.value = cat.img_link;
-        if(cat.favourite) {
-            inputs.favourite.checked = true;
-        }
-        catImg.style.backgroundImage = `url(${cat.img_link})`;
+        catImg.style.backgroundImage = cat.img_link ? `url(${cat.img_link})` : defaultCatImgUrl;
     }
     if(target.classList.contains('fa-trash')) {
         const deletedId = target.parentNode.id;
@@ -92,7 +95,7 @@ cards.addEventListener('click', async (evt) => {
 addBtn.addEventListener('click', () => {
     popup.classList.toggle('active');
     inputs.id.removeAttribute('disabled');
-    catImg.style.backgroundImage = 'url(images/cat.jpg)';
+    catImg.style.backgroundImage = defaultCatImgUrl;
     form.classList.add('add');
     form.classList.remove('update');
 });
@@ -120,10 +123,9 @@ form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const newCat = createCatObj(inputs);
     if(form.classList.contains('add')) {
-
         await api.addCat(newCat);
         
-        let card = createCard(newCat);
+        const card = createCard(newCat);
         cards.innerHTML += card;
     
         const response = await api.getCats();
@@ -132,11 +134,11 @@ form.addEventListener('submit', async (evt) => {
             localStorage.setItem('cats', JSON.stringify(storage));
         }
     }
+    
     if(form.classList.contains('update')) {
 
         const updId = inputs.id.value;
         const response = await api.updCat(updId, newCat);
-
         if(response.ok) {
             const index = storage.findIndex((cat) => cat.id == updId);
             storage[index] = newCat;
